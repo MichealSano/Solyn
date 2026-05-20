@@ -1,6 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
+    <!-- ===== FAVICON ===== -->
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <meta name="theme-color" content="#6366f1">
+    <meta name="msapplication-TileColor" content="#6366f1">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SOLYNK — Solar Engineering Platform</title>
@@ -38,12 +43,12 @@
         // Replace with your own Firebase project config from:
         // https://console.firebase.google.com/ → Project Settings → General → Web App
         const firebaseConfig = {
-            apiKey: "YOUR_API_KEY",
-            authDomain: "YOUR_PROJECT_ID.firebaseapp.com",
-            projectId: "YOUR_PROJECT_ID",
-            storageBucket: "YOUR_PROJECT_ID.appspot.com",
-            messagingSenderId: "YOUR_MESSAGING_SENDER_ID",
-            appId: "YOUR_APP_ID"
+            apiKey: "AIzaSyDeW_VMWMMBoceGJ2U1WbWqJdvsuF-ipx0",
+            authDomain: "solynk.firebaseapp.com",
+            projectId: "solynk",
+            storageBucket: "solynk.firebasestorage.app",
+            messagingSenderId: "150235172385",
+            appId: "1:150235172385:web:6bffc01623ef9410be9d60"
         };
 
         // Initialize Firebase
@@ -104,6 +109,32 @@
             --shadow-md: 0 4px 20px rgba(0,0,0,0.5);
             --shadow-lg: 0 8px 40px rgba(0,0,0,0.6);
         }
+        [data-theme="light"] {
+            --bg: #f8fafc;
+            --bg-raised: #f1f5f9;
+            --surface: #ffffff;
+            --surface-hover: #e2e8f0;
+            --border: rgba(148,163,184,0.25);
+            --border-hover: rgba(148,163,184,0.4);
+            --text: #0f172a;
+            --text-secondary: #475569;
+            --text-muted: #64748b;
+            --primary: #4f46e5;
+            --primary-bright: #6366f1;
+            --primary-dim: rgba(79,70,229,0.08);
+            --primary-glow: rgba(79,70,229,0.15);
+            --accent: #0891b2;
+            --accent-dim: rgba(8,145,178,0.08);
+            --accent-glow: rgba(8,145,178,0.12);
+            --success: #059669;
+            --success-dim: rgba(5,150,105,0.08);
+            --warning: #d97706;
+            --danger: #dc2626;
+            --shadow: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 4px 20px rgba(0,0,0,0.08);
+            --shadow-lg: 0 8px 40px rgba(0,0,0,0.1);
+        }
+
 
         * { margin:0; padding:0; box-sizing:border-box; }
         html { scroll-behavior:smooth; }
@@ -242,11 +273,27 @@
         }
         .hero-bg-img {
             position:absolute; inset:0; z-index:0;
-            background:url('https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1920&q=80') center/cover no-repeat;
+            transition: opacity 0.6s ease;
         }
-        .hero-bg-img::after {
+        .hero-bg-dark {
+            background:url('https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1920&q=80') center/cover no-repeat;
+            opacity: 1;
+        }
+        .hero-bg-light {
+            background:url('https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1920&q=80') center/cover no-repeat;
+            opacity: 0;
+        }
+        [data-theme="light"] .hero-bg-dark { opacity: 0; }
+        [data-theme="light"] .hero-bg-light { opacity: 1; }
+        [data-theme="dark"] .hero-bg-dark { opacity: 1; }
+        [data-theme="dark"] .hero-bg-light { opacity: 0; }
+        .hero-bg-dark::after {
             content:''; position:absolute; inset:0;
             background:linear-gradient(90deg, rgba(3,7,18,0.95) 0%, rgba(3,7,18,0.85) 50%, rgba(3,7,18,0.6) 100%);
+        }
+        .hero-bg-light::after {
+            content:''; position:absolute; inset:0;
+            background:linear-gradient(90deg, rgba(255,255,255,0.92) 0%, rgba(255,255,255,0.85) 50%, rgba(255,255,255,0.6) 100%);
         }
         .hero-grid-overlay {
             position:absolute; inset:0; z-index:1; opacity:0.15;
@@ -331,6 +378,8 @@
             border:1px solid var(--border); padding:36px 28px;
             transition:all 0.4s cubic-bezier(0.4,0,0.2,1);
             position:relative; overflow:hidden;
+            cursor: pointer;
+            user-select: none;
         }
         .feat-card::before {
             content:''; position:absolute; top:0; left:0; right:0; height:1px;
@@ -339,9 +388,13 @@
         }
         .feat-card:hover::before { opacity:1; }
         .feat-card:hover {
-            transform:translateY(-6px);
-            border-color:var(--border-hover);
-            box-shadow:var(--shadow-lg);
+            transform:translateY(-6px) scale(1.02);
+            border-color:var(--primary);
+            box-shadow:0 12px 48px rgba(99,102,241,0.12), var(--shadow-lg);
+        }
+        .feat-card:active {
+            transform:translateY(-2px) scale(0.98);
+            transition-duration:0.1s;
         }
         .feat-icon {
             width:48px; height:48px; border-radius:12px;
@@ -989,9 +1042,22 @@
         }
         .faq-hero-bg {
             position:absolute; inset:0; z-index:0;
+            transition: opacity 0.6s ease;
+        }
+        .faq-hero-dark {
             background:url('https://images.unsplash.com/photo-1509391366360-2e959784a276?w=1920&q=80') center/cover no-repeat;
             filter:brightness(0.3);
+            opacity: 1;
         }
+        .faq-hero-light {
+            background:url('https://images.unsplash.com/photo-1466611653911-95081537e5b7?w=1920&q=80') center/cover no-repeat;
+            filter:brightness(0.55);
+            opacity: 0;
+        }
+        [data-theme="light"] .faq-hero-dark { opacity: 0; }
+        [data-theme="light"] .faq-hero-light { opacity: 1; }
+        [data-theme="dark"] .faq-hero-dark { opacity: 1; }
+        [data-theme="dark"] .faq-hero-light { opacity: 0; }
         .faq-hero-inner { position:relative; z-index:2; text-align:center; max-width:700px; }
         .faq-hero h1 {
             font-family:'Plus Jakarta Sans',sans-serif; font-size:clamp(2rem, 4vw, 3rem);
@@ -1703,8 +1769,17 @@
             .admin-search { max-width:100%; }
             .admin-table-wrap { overflow-x:auto; }
         }
+
+
+
+        [data-theme="light"] .hero-tag { background: rgba(99,102,241,0.12); border-color: rgba(99,102,241,0.25); }
+        [data-theme="light"] .btn-google { background: #fff; color: #0f172a; border-color: var(--border-hover); }
+        [data-theme="light"] .btn-google:hover { background: #f8fafc; }
+        [data-theme="light"] .hero-grid-overlay { opacity: 0.06; }
+        [data-theme="light"] ::-webkit-scrollbar-thumb { background: var(--border-hover); }
+
 </style>
-    <base target="_blank">
+    <base target="_self">
 <base target="_blank">
 </head>
 <body>
@@ -1715,6 +1790,9 @@
             <div class="logo"><i class="fas fa-solar-panel"></i></div>
             SOLYNK
         </div>
+        <button class="btn btn-ghost" id="themeToggle" onclick="toggleTheme()" title="Toggle theme" style="width:40px;height:40px;padding:0;justify-content:center;border-radius:10px;margin-left:auto;margin-right:12px;">
+            <i class="fas fa-sun" id="themeIcon" style="font-size:1rem;"></i>
+        </button>
         <div class="nav-links">
             <a href="#" class="active" onclick="showView('landing')">Home</a>
             <a href="#" onclick="scrollToFeatures()">Features</a>
@@ -1743,7 +1821,8 @@
     <!-- Landing -->
     <div id="view-landing" class="view active">
         <div class="hero">
-            <div class="hero-bg-img"></div>
+            <div class="hero-bg-img hero-bg-dark"></div>
+            <div class="hero-bg-img hero-bg-light"></div>
             <div class="hero-grid-overlay"></div>
             <div class="hero-particles" id="particles"></div>
             <div class="hero-inner">
@@ -1770,32 +1849,32 @@
                 <p>From initial calculations to final installation, SOLYNK streamlines every step of your solar journey with precision engineering.</p>
             </div>
             <div class="feat-grid">
-                <div class="feat-card anim-fade-up anim-delay-1">
+                <div class="feat-card anim-fade-up anim-delay-1" onclick="showView('calculator')" role="button" tabindex="0">
                     <div class="feat-icon purple"><i class="fas fa-calculator"></i></div>
                     <h3>Smart Calculator</h3>
                     <p>Accurate load analysis, battery sizing, panel configuration, and inverter selection with real-time AI optimization.</p>
                 </div>
-                <div class="feat-card anim-fade-up anim-delay-2">
+                <div class="feat-card anim-fade-up anim-delay-2" onclick="toggleAI()" role="button" tabindex="0">
                     <div class="feat-icon cyan"><i class="fas fa-brain"></i></div>
                     <h3>AI Assistant</h3>
                     <p>Get intelligent recommendations, cost estimates, and system optimizations tailored to your specific energy needs.</p>
                 </div>
-                <div class="feat-card anim-fade-up anim-delay-3">
+                <div class="feat-card anim-fade-up anim-delay-3" onclick="exportReport()" role="button" tabindex="0">
                     <div class="feat-icon green"><i class="fas fa-file-export"></i></div>
                     <h3>Export & Reports</h3>
                     <p>Generate professional PDF reports, BOM lists, and wiring diagrams for permits and installer quotes.</p>
                 </div>
-                <div class="feat-card anim-fade-up anim-delay-4">
+                <div class="feat-card anim-fade-up anim-delay-4" onclick="showView('marketplace')" role="button" tabindex="0">
                     <div class="feat-icon purple"><i class="fas fa-handshake"></i></div>
                     <h3>Installer Network</h3>
                     <p>Connect with verified local installers, compare quotes, read reviews, and schedule consultations seamlessly.</p>
                 </div>
-                <div class="feat-card anim-fade-up anim-delay-5">
+                <div class="feat-card anim-fade-up anim-delay-5" onclick="showResults()" role="button" tabindex="0">
                     <div class="feat-icon cyan"><i class="fas fa-chart-line"></i></div>
                     <h3>Financial Analysis</h3>
                     <p>ROI calculations, payback periods, financing options, net metering analysis, and tariff optimization.</p>
                 </div>
-                <div class="feat-card anim-fade-up anim-delay-6">
+                <div class="feat-card anim-fade-up anim-delay-6" onclick="showView('calculator')" role="button" tabindex="0">
                     <div class="feat-icon green"><i class="fas fa-cloud-sun"></i></div>
                     <h3>Weather Integration</h3>
                     <p>Real-time irradiance data, weather forecasting, seasonal performance adjustments, and shading analysis.</p>
@@ -2503,7 +2582,8 @@
     <!-- FAQ View -->
     <div id="view-faq" class="view">
         <div class="faq-hero">
-            <div class="faq-hero-bg"></div>
+            <div class="faq-hero-bg faq-hero-dark"></div>
+            <div class="faq-hero-bg faq-hero-light"></div>
             <div class="faq-hero-inner">
                 <div class="hero-tag"><i class="fas fa-question-circle"></i> Help Center</div>
                 <h1>Frequently Asked Questions</h1>
@@ -3169,7 +3249,7 @@
                     datasets: [{
                         data: values,
                         backgroundColor: ['rgba(99,102,241,0.8)', 'rgba(34,211,238,0.8)', 'rgba(52,211,153,0.8)', 'rgba(167,139,250,0.8)', 'rgba(248,113,113,0.8)', 'rgba(236,72,153,0.8)'],
-                        borderColor: '#0f172a', borderWidth: 2
+                        borderColor: 'rgba(148,163,184,0.15)', borderWidth: 2
                     }]
                 },
                 options: {
@@ -3717,1119 +3797,177 @@
         function viewInstaller(id) {
             const inst = installerDatabase.find(i => i.id === id);
             if (!inst) return;
-
-            const content = document.getElementById('installerProfileContent');
             const modal = document.getElementById('installerModal');
-            if (!content || !modal) return;
+            const content = document.getElementById('installerProfileContent');
+            if (!modal || !content) return;
 
             content.innerHTML = `
                 <div class="profile-hero">
-                    <div class="inst-avatar" style="background:${inst.color}; width:80px; height:80px; font-size:1.8rem;">${inst.avatar}</div>
+                    <div class="inst-avatar" style="background:${inst.color};width:80px;height:80px;border-radius:18px;font-size:1.8rem;">${inst.avatar}</div>
                     <div>
                         <h2>${inst.name}</h2>
-                        <p>${inst.company} · ${inst.location}</p>
+                        <p>${inst.company} &middot; ${inst.location}</p>
                         <div class="inst-rating" style="margin-top:8px;">
-                            <span class="stars">${'★'.repeat(Math.floor(inst.rating))}</span>
+                            <span class="stars" style="color:var(--warning);">${'★'.repeat(Math.floor(inst.rating))}${inst.rating % 1 >= 0.5 ? '½' : ''}</span>
                             <span class="score">${inst.rating}</span>
                             <span class="reviews">(${inst.reviews} reviews)</span>
                         </div>
                     </div>
                 </div>
-
                 <div class="profile-stats">
-                    <div class="profile-stat">
-                        <div class="val">${inst.projects}</div>
-                        <div class="lbl">Projects Done</div>
-                    </div>
-                    <div class="profile-stat">
-                        <div class="val">${inst.experience}+</div>
-                        <div class="lbl">Years Experience</div>
-                    </div>
-                    <div class="profile-stat">
-                        <div class="val">${inst.reviews}</div>
-                        <div class="lbl">Customer Reviews</div>
-                    </div>
+                    <div class="profile-stat"><div class="val">${inst.projects}</div><div class="lbl">Projects</div></div>
+                    <div class="profile-stat"><div class="val">${inst.experience}</div><div class="lbl">Years Exp.</div></div>
+                    <div class="profile-stat"><div class="val">${inst.rating}</div><div class="lbl">Rating</div></div>
                 </div>
-
                 <div class="profile-section">
                     <h4><i class="fas fa-info-circle"></i> About</h4>
-                    <p style="color:var(--text-secondary); font-size:0.92rem; line-height:1.7;">${inst.description}</p>
+                    <p style="color:var(--text-secondary);font-size:0.9rem;line-height:1.7;">${inst.description}</p>
                 </div>
-
                 <div class="profile-section">
                     <h4><i class="fas fa-tools"></i> Services</h4>
                     <div class="service-tags">
                         ${inst.services.map(s => `<span class="service-tag">${s.charAt(0).toUpperCase() + s.slice(1)}</span>`).join('')}
                     </div>
                 </div>
-
                 <div class="profile-section">
                     <h4><i class="fas fa-certificate"></i> Certifications</h4>
                     <div class="cert-list">
-                        ${inst.certifications.map(cert => `<div class="cert-item"><i class="fas fa-check-circle"></i><span>${cert}</span></div>`).join('')}
+                        ${inst.certifications.map(c => `<div class="cert-item"><i class="fas fa-check-circle"></i><span>${c}</span></div>`).join('')}
                     </div>
                 </div>
-
                 <div class="profile-section">
-                    <h4><i class="fas fa-images"></i> Portfolio</h4>
-                    <div class="inst-portfolio" style="grid-template-columns:repeat(3, 1fr);">
-                        ${inst.portfolio.map(img => `<img src="${img}" style="height:120px; border-radius:10px;">`).join('')}
-                    </div>
-                </div>
-
-                <div class="profile-section">
-                    <h4><i class="fas fa-comments"></i> Recent Reviews</h4>
-                    ${inst.reviewList.map(review => `
+                    <h4><i class="fas fa-comments"></i> Reviews</h4>
+                    ${inst.reviewList.map(r => `
                         <div class="review-item">
                             <div class="review-header">
                                 <div class="reviewer">
-                                    <div class="reviewer-avatar">${review.name.charAt(0)}</div>
+                                    <div class="reviewer-avatar">${r.name.charAt(0)}</div>
                                     <div>
-                                        <div class="reviewer-name">${review.name}</div>
-                                        <div class="review-date">${review.date}</div>
+                                        <div class="reviewer-name">${r.name}</div>
+                                        <div class="review-date">${r.date}</div>
                                     </div>
                                 </div>
+                                <div class="review-stars">${'★'.repeat(r.rating)}</div>
                             </div>
-                            <div class="review-stars">${'★'.repeat(review.rating)}</div>
-                            <div class="review-text">${review.text}</div>
+                            <div class="review-text">${r.text}</div>
                         </div>
                     `).join('')}
                 </div>
-
-                <div style="display:flex; gap:12px; margin-top:24px; padding-top:24px; border-top:1px solid var(--border);">
-                    <button class="btn btn-primary" style="flex:1; justify-content:center;" onclick="requestQuote(${inst.id}); closeInstallerModal();">
-                        <i class="fas fa-file-invoice"></i> Request Quote
-                    </button>
-                    <button class="btn btn-accent" style="flex:1; justify-content:center;" onclick="sendProjectToInstaller(${inst.id}); closeInstallerModal();">
-                        <i class="fas fa-paper-plane"></i> Send Project
-                    </button>
+                <div style="display:flex;gap:12px;margin-top:24px;">
+                    <button class="btn btn-primary" style="flex:1;justify-content:center;" onclick="requestQuote(${inst.id})"><i class="fas fa-file-invoice"></i> Request Quote</button>
+                    <button class="btn btn-ghost" style="flex:1;justify-content:center;" onclick="closeInstallerModal()"><i class="fas fa-times"></i> Close</button>
                 </div>
             `;
-
             modal.classList.add('active');
         }
 
         function closeInstallerModal(e) {
             if (!e || e.target === document.getElementById('installerModal')) {
-                document.getElementById('installerModal')?.classList.remove('active');
+                document.getElementById('installerModal').classList.remove('active');
             }
         }
 
-        function requestQuote(installerId) {
+        function requestQuote(id) {
             if (!currentUser) { openAuth('login'); return; }
-            const inst = installerDatabase.find(i => i.id === installerId);
-            toast(`Quote request sent to ${inst?.name || 'installer'}! Expect response within 24 hours.`, 'ok');
+            const inst = installerDatabase.find(i => i.id === id);
+            toast('Quote request sent to ' + (inst ? inst.name : 'installer') + '! Expect a response within 24 hours.', 'ok');
+            closeInstallerModal();
         }
-
-        function sendProjectToInstaller(installerId) {
-            if (!currentUser) { openAuth('login'); return; }
-            const inst = installerDatabase.find(i => i.id === installerId);
-            toast(`Your project details sent to ${inst?.name || 'installer'} for review.`, 'ok');
-        }
-
-        // ===== SUBSCRIPTION SYSTEM =====
-        const subscriptionPlans = {
-            free: {
-                name: "Free",
-                price: 0,
-                period: "month",
-                features: [
-                    { text: "Basic solar calculator", included: true },
-                    { text: "Up to 3 saved projects", included: true },
-                    { text: "Standard PDF reports", included: true },
-                    { text: "Community support", included: true },
-                    { text: "AI optimization", included: false },
-                    { text: "Unlimited projects", included: false },
-                    { text: "Professional exports", included: false },
-                    { text: "Installer marketplace access", included: false },
-                    { text: "Report branding", included: false },
-                    { text: "Priority support", included: false }
-                ],
-                limits: { projects: 3, calculations: 10, reports: 5 }
-            },
-            premium: {
-                name: "Premium",
-                price: 29,
-                period: "month",
-                features: [
-                    { text: "Advanced AI optimization", included: true },
-                    { text: "Unlimited projects", included: true },
-                    { text: "Professional PDF exports", included: true },
-                    { text: "Priority installer matching", included: true },
-                    { text: "Financial modeling & ROI", included: true },
-                    { text: "Custom report branding", included: true },
-                    { text: "API access (500 req/month)", included: true },
-                    { text: "Priority email support", included: true },
-                    { text: "Weather integration", included: true },
-                    { text: "White-label options", included: false }
-                ],
-                limits: { projects: Infinity, calculations: Infinity, reports: Infinity }
-            },
-            installer: {
-                name: "Installer",
-                price: 99,
-                period: "month",
-                features: [
-                    { text: "Verified installer badge", included: true },
-                    { text: "Lead generation dashboard", included: true },
-                    { text: "Custom branding & API", included: true },
-                    { text: "Dedicated account manager", included: true },
-                    { text: "White-label reports", included: true },
-                    { text: "Client project management", included: true },
-                    { text: "Quote builder tool", included: true },
-                    { text: "Priority marketplace listing", included: true },
-                    { text: "Analytics & reporting", included: true },
-                    { text: "Team collaboration (5 seats)", included: true }
-                ],
-                limits: { projects: Infinity, calculations: Infinity, reports: Infinity }
-            }
-        };
-
-        let currentPlan = 'premium'; // Default for demo
-        let usageStats = { projects: 12, calculations: 48, reports: 8 };
 
         function showBilling() {
-            showView('billing');
-            renderBilling();
-        }
-
-        function renderBilling() {
+            if (!currentUser) { openAuth('login'); return; }
             const container = document.getElementById('billingContainer');
             if (!container) return;
-
-            const plan = subscriptionPlans[currentPlan];
-            const isFree = currentPlan === 'free';
-
             container.innerHTML = `
                 <div class="billing-head">
                     <div>
-                        <h1><i class="fas fa-credit-card" style="color:var(--primary-bright); margin-right:12px;"></i>Subscription & Billing</h1>
-                        <p>Manage your plan, usage, and payment settings</p>
+                        <h1><i class="fas fa-credit-card" style="color:var(--primary-bright);margin-right:12px;"></i>Subscription & Billing</h1>
+                        <p>Manage your SOLYNK plan and payment details</p>
                     </div>
                     <div class="current-plan">
-                        <span class="plan-name"><i class="fas fa-crown" style="margin-right:6px;"></i>${plan.name} Plan</span>
-                        <span class="plan-renew">Renews on Oct 15, 2026</span>
+                        <div>
+                            <div class="plan-name">Premium Plan</div>
+                            <div class="plan-renew">Renews on Oct 15, 2026</div>
+                        </div>
                     </div>
                 </div>
-
                 <div class="plan-grid">
-                    ${Object.entries(subscriptionPlans).map(([key, p]) => `
-                        <div class="plan-card ${key === currentPlan ? 'current' : ''}">
-                            <h3>${p.name}</h3>
-                            <div class="plan-price">$${p.price}<span>/${p.period}</span></div>
-                            ${key !== 'free' ? '<div class="plan-limit">14-day free trial</div>' : '<div class="plan-limit">No credit card required</div>'}
-                            <ul class="plan-features">
-                                ${p.features.map(f => `
-                                    <li class="${f.included ? '' : 'disabled'}">
-                                        <i class="fas ${f.included ? 'fa-check' : 'fa-times'}"></i>
-                                        ${f.text}
-                                    </li>
-                                `).join('')}
-                            </ul>
-                            ${key === currentPlan 
-                                ? '<button class="btn btn-ghost" style="width:100%;" disabled><i class="fas fa-check"></i> Current Plan</button>'
-                                : `<button class="btn btn-primary" style="width:100%;" onclick="changePlan('${key}')"><i class="fas fa-arrow-up"></i> ${p.price > plan.price ? 'Upgrade' : 'Downgrade'}</button>`
-                            }
-                        </div>
-                    `).join('')}
-                </div>
-
-                <div class="panel" style="margin-bottom:24px;">
-                    <div class="panel-head"><h3><i class="fas fa-chart-bar" style="color:var(--primary-bright); margin-right:10px;"></i>Usage This Month</h3></div>
-                    <div class="panel-body">
-                        <div style="display:grid; grid-template-columns:repeat(3, 1fr); gap:24px;">
-                            <div>
-                                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                                    <span style="font-size:0.88rem; color:var(--text-secondary);">Projects</span>
-                                    <span style="font-size:0.88rem; font-weight:600;">${usageStats.projects} / ${plan.limits.projects === Infinity ? '∞' : plan.limits.projects}</span>
-                                </div>
-                                <div class="usage-bar">
-                                    <div class="fill ${getUsageClass(usageStats.projects, plan.limits.projects)}" style="width:${getUsagePercent(usageStats.projects, plan.limits.projects)}%"></div>
-                                </div>
-                                <div class="usage-label">
-                                    <span>${getUsagePercent(usageStats.projects, plan.limits.projects)}% used</span>
-                                    <span>${plan.limits.projects === Infinity ? 'Unlimited' : (plan.limits.projects - usageStats.projects) + ' remaining'}</span>
-                                </div>
-                            </div>
-                            <div>
-                                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                                    <span style="font-size:0.88rem; color:var(--text-secondary);">Calculations</span>
-                                    <span style="font-size:0.88rem; font-weight:600;">${usageStats.calculations} / ${plan.limits.calculations === Infinity ? '∞' : plan.limits.calculations}</span>
-                                </div>
-                                <div class="usage-bar">
-                                    <div class="fill ${getUsageClass(usageStats.calculations, plan.limits.calculations)}" style="width:${getUsagePercent(usageStats.calculations, plan.limits.calculations)}%"></div>
-                                </div>
-                                <div class="usage-label">
-                                    <span>${getUsagePercent(usageStats.calculations, plan.limits.calculations)}% used</span>
-                                    <span>${plan.limits.calculations === Infinity ? 'Unlimited' : (plan.limits.calculations - usageStats.calculations) + ' remaining'}</span>
-                                </div>
-                            </div>
-                            <div>
-                                <div style="display:flex; justify-content:space-between; margin-bottom:8px;">
-                                    <span style="font-size:0.88rem; color:var(--text-secondary);">Reports</span>
-                                    <span style="font-size:0.88rem; font-weight:600;">${usageStats.reports} / ${plan.limits.reports === Infinity ? '∞' : plan.limits.reports}</span>
-                                </div>
-                                <div class="usage-bar">
-                                    <div class="fill ${getUsageClass(usageStats.reports, plan.limits.reports)}" style="width:${getUsagePercent(usageStats.reports, plan.limits.reports)}%"></div>
-                                </div>
-                                <div class="usage-label">
-                                    <span>${getUsagePercent(usageStats.reports, plan.limits.reports)}% used</span>
-                                    <span>${plan.limits.reports === Infinity ? 'Unlimited' : (plan.limits.reports - usageStats.reports) + ' remaining'}</span>
-                                </div>
-                            </div>
-                        </div>
+                    <div class="plan-card">
+                        <h3>Free</h3>
+                        <div class="plan-price">$0<span>/month</span></div>
+                        <div class="plan-limit"><i class="fas fa-layer-group"></i> 3 projects limit</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> Basic solar calculator</li>
+                            <li><i class="fas fa-check"></i> Up to 3 saved projects</li>
+                            <li><i class="fas fa-check"></i> Standard reports</li>
+                            <li class="disabled"><i class="fas fa-times"></i> AI optimization</li>
+                            <li class="disabled"><i class="fas fa-times"></i> Professional exports</li>
+                        </ul>
+                        <button class="btn btn-ghost" style="width:100%;" onclick="toast('Downgraded to Free plan','ok')">Downgrade</button>
                     </div>
-                </div>
-
-                <div class="panel">
-                    <div class="panel-head"><h3><i class="fas fa-history" style="color:var(--primary-bright); margin-right:10px;"></i>Billing History</h3></div>
-                    <div class="panel-body">
-                        <div class="act-item">
-                            <div class="act-ico"><i class="fas fa-receipt"></i></div>
-                            <div class="act-info"><h4>Premium Plan — Monthly</h4><p>Oct 15, 2026 · $29.00</p></div>
-                            <span class="act-time" style="color:var(--success);">Paid</span>
-                        </div>
-                        <div class="act-item">
-                            <div class="act-ico"><i class="fas fa-receipt"></i></div>
-                            <div class="act-info"><h4>Premium Plan — Monthly</h4><p>Sep 15, 2026 · $29.00</p></div>
-                            <span class="act-time" style="color:var(--success);">Paid</span>
-                        </div>
-                        <div class="act-item">
-                            <div class="act-ico"><i class="fas fa-receipt"></i></div>
-                            <div class="act-info"><h4>Premium Plan — Monthly</h4><p>Aug 15, 2026 · $29.00</p></div>
-                            <span class="act-time" style="color:var(--success);">Paid</span>
-                        </div>
+                    <div class="plan-card current">
+                        <h3>Premium</h3>
+                        <div class="plan-price">$29<span>/month</span></div>
+                        <div class="plan-limit"><i class="fas fa-infinity"></i> Unlimited projects</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> Advanced AI optimization</li>
+                            <li><i class="fas fa-check"></i> Unlimited projects</li>
+                            <li><i class="fas fa-check"></i> Professional PDF exports</li>
+                            <li><i class="fas fa-check"></i> Priority installer matching</li>
+                            <li><i class="fas fa-check"></i> Financial modeling & ROI</li>
+                        </ul>
+                        <button class="btn btn-primary" style="width:100%;">Current Plan</button>
+                        <div class="usage-bar" style="margin-top:16px;"><div class="fill" style="width:45%;"></div></div>
+                        <div class="usage-label"><span>12 of 50 reports used</span><span>45%</span></div>
+                    </div>
+                    <div class="plan-card">
+                        <h3>Installer</h3>
+                        <div class="plan-price">$99<span>/month</span></div>
+                        <div class="plan-limit"><i class="fas fa-briefcase"></i> Business features</div>
+                        <ul class="plan-features">
+                            <li><i class="fas fa-check"></i> Verified installer badge</li>
+                            <li><i class="fas fa-check"></i> Lead generation dashboard</li>
+                            <li><i class="fas fa-check"></i> Custom branding & API</li>
+                            <li><i class="fas fa-check"></i> Dedicated account manager</li>
+                            <li><i class="fas fa-check"></i> White-label reports</li>
+                        </ul>
+                        <button class="btn btn-ghost" style="width:100%;" onclick="toast('Upgrade request submitted','ok')">Upgrade</button>
                     </div>
                 </div>
             `;
+            showView('billing');
         }
-
-        function getUsagePercent(used, limit) {
-            if (limit === Infinity) return 0;
-            return Math.min(100, Math.round((used / limit) * 100));
-        }
-        function getUsageClass(used, limit) {
-            if (limit === Infinity) return '';
-            const pct = (used / limit) * 100;
-            if (pct >= 90) return 'danger';
-            if (pct >= 70) return 'warning';
-            return '';
-        }
-        function changePlan(newPlan) {
-            if (!currentUser) { openAuth('login'); return; }
-            const plan = subscriptionPlans[newPlan];
-            if (confirm(`Change to ${plan.name} plan at $${plan.price}/${plan.period}?`)) {
-                currentPlan = newPlan;
-                toast(`Successfully changed to ${plan.name} plan!`, 'ok');
-                renderBilling();
-                updateNav(); // Update badge
-            }
-        }
-
-        // Check limits before actions
-        function checkLimit(type) {
-            const plan = subscriptionPlans[currentPlan];
-            const current = usageStats[type];
-            const limit = plan.limits[type];
-            if (limit !== Infinity && current >= limit) {
-                toast(`You've reached your ${plan.name} plan limit for ${type}. Upgrade for unlimited access.`, 'err');
-                return false;
-            }
-            return true;
-        }
-
-        // Override saveProject to check limits
-        const originalSaveProject = saveProject;
-        saveProject = async function() {
-            if (!checkLimit('projects')) return;
-            usageStats.projects++;
-            await originalSaveProject();
-        };
-
-        // Override calculateSystem to track calculations
-        const originalCalculate = calculateSystem;
-        calculateSystem = function() {
-            if (!checkLimit('calculations')) return;
-            // Only increment if user interacted (not auto-calc on load)
-            // For now, we'll track in the input handler
-            originalCalculate();
-        };
-
-        // Override exportReport to check limits
-        const originalExport = exportReport;
-        exportReport = function() {
-            if (!checkLimit('reports')) return;
-            usageStats.reports++;
-            originalExport();
-        };
-
-        // Initialize marketplace on page load
-        document.addEventListener('DOMContentLoaded', () => {
-            renderInstallers(installerDatabase);
-        });
-
-
-        // ===== ADMIN PANEL FUNCTIONS =====
-        // Mock admin data
-        const adminUsers = [
-            { id: 1, name: "Sarah Johnson", email: "sarah.j@email.com", plan: "premium", projects: 12, joined: "2026-01-15", status: "active", avatar: "SJ" },
-            { id: 2, name: "Michael Chen", email: "mchen@email.com", plan: "free", projects: 2, joined: "2026-02-20", status: "active", avatar: "MC" },
-            { id: 3, name: "Emily Rodriguez", email: "emily.r@email.com", plan: "premium", projects: 8, joined: "2026-03-05", status: "active", avatar: "ER" },
-            { id: 4, name: "David Kim", email: "dkim@email.com", plan: "installer", projects: 0, joined: "2026-01-28", status: "active", avatar: "DK" },
-            { id: 5, name: "Lisa Thompson", email: "lisa.t@email.com", plan: "free", projects: 3, joined: "2026-04-10", status: "suspended", avatar: "LT" },
-            { id: 6, name: "James Wilson", email: "jwilson@email.com", plan: "premium", projects: 15, joined: "2025-11-20", status: "active", avatar: "JW" },
-            { id: 7, name: "Anna Martinez", email: "anna.m@email.com", plan: "free", projects: 1, joined: "2026-05-01", status: "active", avatar: "AM" },
-            { id: 8, name: "Robert Brown", email: "rbrown@email.com", plan: "installer", projects: 0, joined: "2026-02-14", status: "pending", avatar: "RB" }
-        ];
-
-        const adminInstallers = [
-            { id: 1, name: "GreenTech Solar", company: "GreenTech Solar Solutions", location: "San Diego, CA", rating: 4.9, status: "verified", projects: 340 },
-            { id: 2, name: "SunPower Pro", company: "SunPower Professional", location: "Austin, TX", rating: 4.7, status: "verified", projects: 210 },
-            { id: 3, name: "SolarMax Energy", company: "SolarMax Energy Systems", location: "Phoenix, AZ", rating: 4.8, status: "verified", projects: 520 },
-            { id: 4, name: "EcoVolt Installers", company: "EcoVolt Solar", location: "Denver, CO", rating: 4.6, status: "pending", projects: 145 },
-            { id: 5, name: "Coastal Solar Co.", company: "Coastal Solar Company", location: "Miami, FL", rating: 4.5, status: "verified", projects: 280 },
-            { id: 6, name: "NY Solar Works", company: "NY Solar Works LLC", location: "Brooklyn, NY", rating: 4.8, status: "verified", projects: 410 }
-        ];
-
-        const adminReports = [
-            { id: 1, name: "Home Solar System 5kW", user: "Sarah Johnson", type: "system", date: "2026-05-14", size: "2.4 MB" },
-            { id: 2, name: "Financial Analysis Q1", user: "Michael Chen", type: "financial", date: "2026-05-13", size: "1.8 MB" },
-            { id: 3, name: "BOM List - 8kW Array", user: "Emily Rodriguez", type: "bom", date: "2026-05-12", size: "3.1 MB" },
-            { id: 4, name: "Off-Grid Cabin Design", user: "James Wilson", type: "system", date: "2026-05-11", size: "2.9 MB" },
-            { id: 5, name: "ROI Projection 25yr", user: "Sarah Johnson", type: "financial", date: "2026-05-10", size: "1.5 MB" },
-            { id: 6, name: "Commercial 50kW System", user: "David Kim", type: "system", date: "2026-05-09", size: "4.2 MB" }
-        ];
 
         function showAdmin() {
-            if (!currentUser || currentUser.email !== 'admin@solynk.com') {
-                toast('Admin access required', 'err');
-                return;
+            showView('landing');
+            toast('Admin panel coming soon', 'info');
+        }
+
+        // ===== THEME TOGGLE =====
+        function toggleTheme() {
+            const html = document.documentElement;
+            const icon = document.getElementById('themeIcon');
+            const current = html.getAttribute('data-theme') || 'dark';
+            const next = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            localStorage.setItem('solynk_theme', next);
+            if (icon) {
+                icon.className = next === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
             }
-            showView('admin');
-            showAdminTab('overview');
-            initAdminCharts();
-        }
-
-        function showAdminTab(tabName) {
-            document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.admin-nav a').forEach(a => a.classList.remove('active'));
-
-            const tab = document.getElementById('admin-tab-' + tabName);
-            if (tab) tab.classList.add('active');
-
-            // Update nav active state
-            const navLinks = document.querySelectorAll('.admin-nav a');
-            navLinks.forEach(link => {
-                if (link.getAttribute('onclick')?.includes("'" + tabName + "'")) {
-                    link.classList.add('active');
-                }
-            });
-
-            // Load tab data
-            if (tabName === 'users') renderAdminUsers();
-            if (tabName === 'installers') renderAdminInstallers();
-            if (tabName === 'reports') renderAdminReports();
-            if (tabName === 'analytics') initAdminAnalyticsCharts();
-        }
-
-        function renderAdminUsers() {
-            const tbody = document.getElementById('usersTableBody');
-            if (!tbody) return;
-
-            const planFilter = document.getElementById('userPlanFilter')?.value || 'all';
-            const statusFilter = document.getElementById('userStatusFilter')?.value || 'all';
-            const search = document.getElementById('userSearch')?.value.toLowerCase() || '';
-
-            let filtered = adminUsers.filter(u => {
-                const matchesPlan = planFilter === 'all' || u.plan === planFilter;
-                const matchesStatus = statusFilter === 'all' || u.status === statusFilter;
-                const matchesSearch = u.name.toLowerCase().includes(search) || u.email.toLowerCase().includes(search);
-                return matchesPlan && matchesStatus && matchesSearch;
-            });
-
-            tbody.innerHTML = filtered.map(u => `
-                <tr>
-                    <td>
-                        <div class="admin-user-cell">
-                            <div class="admin-user-avatar">${u.avatar}</div>
-                            <div class="admin-user-info">
-                                <h4>${u.name}</h4>
-                                <span>ID: #${u.id.toString().padStart(4, '0')}</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td>${u.email}</td>
-                    <td><span class="admin-plan-badge ${u.plan}">${u.plan.charAt(0).toUpperCase() + u.plan.slice(1)}</span></td>
-                    <td>${u.projects}</td>
-                    <td>${u.joined}</td>
-                    <td><span class="admin-status ${u.status}">${u.status.charAt(0).toUpperCase() + u.status.slice(1)}</span></td>
-                    <td>
-                        <div class="admin-actions">
-                            <button class="btn btn-sm btn-ghost" onclick="editUserPlan(${u.id})" title="Change Plan"><i class="fas fa-crown"></i></button>
-                            <button class="btn btn-sm btn-ghost" onclick="toggleUserStatus(${u.id})" title="${u.status === 'active' ? 'Suspend' : 'Activate'}"><i class="fas fa-${u.status === 'active' ? 'ban' : 'check'}"></i></button>
-                            <button class="btn btn-sm btn-danger" onclick="deleteUser(${u.id})" title="Delete"><i class="fas fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
-
-            document.getElementById('adminUserCount').textContent = filtered.length;
-        }
-
-        function renderAdminInstallers() {
-            const tbody = document.getElementById('installersTableBody');
-            if (!tbody) return;
-
-            const statusFilter = document.getElementById('installerStatusFilter')?.value || 'all';
-            const search = document.getElementById('installerSearchAdmin')?.value.toLowerCase() || '';
-
-            let filtered = adminInstallers.filter(i => {
-                const matchesStatus = statusFilter === 'all' || i.status === statusFilter;
-                const matchesSearch = i.name.toLowerCase().includes(search) || i.company.toLowerCase().includes(search);
-                return matchesStatus && matchesSearch;
-            });
-
-            tbody.innerHTML = filtered.map(i => `
-                <tr>
-                    <td>
-                        <div class="admin-user-cell">
-                            <div class="admin-user-avatar" style="background:${i.color || 'var(--primary)'};">${i.name.charAt(0)}</div>
-                            <div class="admin-user-info">
-                                <h4>${i.name}</h4>
-                                <span>${i.projects} projects</span>
-                            </div>
-                        </div>
-                    </td>
-                    <td>${i.company}</td>
-                    <td>${i.location}</td>
-                    <td><span class="stars" style="color:var(--warning);">${'★'.repeat(Math.floor(i.rating))}</span> ${i.rating}</td>
-                    <td><span class="admin-status ${i.status}">${i.status.charAt(0).toUpperCase() + i.status.slice(1)}</span></td>
-                    <td>
-                        <div class="admin-actions">
-                            ${i.status === 'pending' ? `<button class="btn btn-sm btn-primary" onclick="verifyInstaller(${i.id})"><i class="fas fa-check"></i> Verify</button>` : ''}
-                            <button class="btn btn-sm btn-ghost" onclick="viewInstaller(${i.id})"><i class="fas fa-eye"></i></button>
-                            <button class="btn btn-sm btn-danger" onclick="removeInstaller(${i.id})"><i class="fas fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
-
-            document.getElementById('adminInstallerCount').textContent = filtered.length;
-        }
-
-        function renderAdminReports() {
-            const tbody = document.getElementById('reportsTableBody');
-            if (!tbody) return;
-
-            const typeFilter = document.getElementById('reportTypeFilter')?.value || 'all';
-            const search = document.getElementById('reportSearch')?.value.toLowerCase() || '';
-
-            let filtered = adminReports.filter(r => {
-                const matchesType = typeFilter === 'all' || r.type === typeFilter;
-                const matchesSearch = r.name.toLowerCase().includes(search) || r.user.toLowerCase().includes(search);
-                return matchesType && matchesSearch;
-            });
-
-            tbody.innerHTML = filtered.map(r => `
-                <tr>
-                    <td><i class="fas fa-file-pdf" style="color:var(--danger); margin-right:8px;"></i>${r.name}</td>
-                    <td>${r.user}</td>
-                    <td><span class="admin-plan-badge free">${r.type.toUpperCase()}</span></td>
-                    <td>${r.date}</td>
-                    <td>${r.size}</td>
-                    <td>
-                        <div class="admin-actions">
-                            <button class="btn btn-sm btn-ghost" onclick="downloadReport(${r.id})"><i class="fas fa-download"></i></button>
-                            <button class="btn btn-sm btn-danger" onclick="deleteReport(${r.id})"><i class="fas fa-trash"></i></button>
-                        </div>
-                    </td>
-                </tr>
-            `).join('');
-
-            document.getElementById('adminReportCount').textContent = filtered.length;
-        }
-
-        function filterAdminUsers() { renderAdminUsers(); }
-        function filterAdminInstallers() { renderAdminInstallers(); }
-        function filterAdminReports() { renderAdminReports(); }
-
-        function editUserPlan(userId) {
-            const user = adminUsers.find(u => u.id === userId);
-            if (!user) return;
-            const newPlan = prompt(`Change plan for ${user.name}:
-
-Current: ${user.plan}
-
-Enter new plan (free/premium/installer):`, user.plan);
-            if (newPlan && ['free', 'premium', 'installer'].includes(newPlan)) {
-                user.plan = newPlan;
-                renderAdminUsers();
-                toast(`Updated ${user.name} to ${newPlan} plan`, 'ok');
+            if (loadChart) {
+                loadChart.options.plugins.legend.labels.color = next === 'dark' ? '#94a3b8' : '#475569';
+                loadChart.update();
             }
         }
-
-        function toggleUserStatus(userId) {
-            const user = adminUsers.find(u => u.id === userId);
-            if (!user) return;
-            user.status = user.status === 'active' ? 'suspended' : 'active';
-            renderAdminUsers();
-            toast(`${user.name} is now ${user.status}`, 'ok');
+        function initTheme() {
+            const saved = localStorage.getItem('solynk_theme');
+            const prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+            const theme = saved || (prefersLight ? 'light' : 'dark');
+            document.documentElement.setAttribute('data-theme', theme);
+            const icon = document.getElementById('themeIcon');
+            if (icon) icon.className = theme === 'dark' ? 'fas fa-sun' : 'fas fa-moon';
         }
-
-        function deleteUser(userId) {
-            const user = adminUsers.find(u => u.id === userId);
-            if (!user) return;
-            if (confirm(`Delete user ${user.name} (${user.email})? This cannot be undone.`)) {
-                const idx = adminUsers.findIndex(u => u.id === userId);
-                if (idx > -1) {
-                    adminUsers.splice(idx, 1);
-                    renderAdminUsers();
-                    toast(`User ${user.name} deleted`, 'ok');
-                }
-            }
-        }
-
-        function verifyInstaller(installerId) {
-            const inst = adminInstallers.find(i => i.id === installerId);
-            if (!inst) return;
-            inst.status = 'verified';
-            renderAdminInstallers();
-            toast(`${inst.name} verified successfully!`, 'ok');
-        }
-
-        function removeInstaller(installerId) {
-            const inst = adminInstallers.find(i => i.id === installerId);
-            if (!inst) return;
-            if (confirm(`Remove installer ${inst.name} from marketplace?`)) {
-                const idx = adminInstallers.findIndex(i => i.id === installerId);
-                if (idx > -1) {
-                    adminInstallers.splice(idx, 1);
-                    renderAdminInstallers();
-                    toast(`Installer ${inst.name} removed`, 'ok');
-                }
-            }
-        }
-
-        function downloadReport(reportId) {
-            toast('Downloading report...', 'info');
-            setTimeout(() => toast('Report downloaded', 'ok'), 800);
-        }
-
-        function deleteReport(reportId) {
-            const report = adminReports.find(r => r.id === reportId);
-            if (!report) return;
-            if (confirm(`Delete report "${report.name}"?`)) {
-                const idx = adminReports.findIndex(r => r.id === reportId);
-                if (idx > -1) {
-                    adminReports.splice(idx, 1);
-                    renderAdminReports();
-                    toast('Report deleted', 'ok');
-                }
-            }
-        }
-
-        // Admin charts
-        let userGrowthChart, revenueChart, revenueTrendChart, planDistChart, installerQuoteChart;
-
-        function initAdminCharts() {
-            setTimeout(() => {
-                initUserGrowthChart();
-                initRevenueChart();
-            }, 100);
-        }
-
-        function initAdminAnalyticsCharts() {
-            setTimeout(() => {
-                initRevenueTrendChart();
-                initPlanDistChart();
-                initInstallerQuoteChart();
-            }, 100);
-        }
-
-        function initUserGrowthChart() {
-            const ctx = document.getElementById('userGrowthChart');
-            if (!ctx || userGrowthChart) return;
-            userGrowthChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
-                    datasets: [{
-                        label: 'New Users',
-                        data: [120, 190, 150, 220, 280, 340],
-                        borderColor: 'rgba(99,102,241,0.8)',
-                        backgroundColor: 'rgba(99,102,241,0.1)',
-                        fill: true, tension: 0.4
-                    }, {
-                        label: 'Active Users',
-                        data: [800, 950, 1100, 1250, 1400, 1600],
-                        borderColor: 'rgba(34,211,238,0.8)',
-                        backgroundColor: 'rgba(34,211,238,0.1)',
-                        fill: true, tension: 0.4
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { labels: { color: '#94a3b8' } } },
-                    scales: {
-                        x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(148,163,184,0.1)' } },
-                        y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(148,163,184,0.1)' } }
-                    }
-                }
-            });
-        }
-
-        function initRevenueChart() {
-            const ctx = document.getElementById('revenueChart');
-            if (!ctx || revenueChart) return;
-            revenueChart = new Chart(ctx, {
-                type: 'doughnut',
-                data: {
-                    labels: ['Premium', 'Installer', 'Enterprise'],
-                    datasets: [{
-                        data: [12470, 9900, 6050],
-                        backgroundColor: ['rgba(99,102,241,0.8)', 'rgba(52,211,153,0.8)', 'rgba(251,191,36,0.8)'],
-                        borderColor: '#0f172a', borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8' } } },
-                    cutout: '65%'
-                }
-            });
-        }
-
-        function initRevenueTrendChart() {
-            const ctx = document.getElementById('revenueTrendChart');
-            if (!ctx || revenueTrendChart) return;
-            revenueTrendChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Dec', 'Jan', 'Feb', 'Mar', 'Apr', 'May'],
-                    datasets: [{
-                        label: 'Revenue ($)',
-                        data: [12400, 13800, 15200, 16800, 17500, 18420],
-                        backgroundColor: 'rgba(99,102,241,0.6)',
-                        borderColor: 'rgba(99,102,241,0.8)',
-                        borderWidth: 1, borderRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { labels: { color: '#94a3b8' } } },
-                    scales: {
-                        x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(148,163,184,0.1)' } },
-                        y: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(148,163,184,0.1)' } }
-                    }
-                }
-            });
-        }
-
-        function initPlanDistChart() {
-            const ctx = document.getElementById('planDistChart');
-            if (!ctx || planDistChart) return;
-            planDistChart = new Chart(ctx, {
-                type: 'pie',
-                data: {
-                    labels: ['Free', 'Premium', 'Installer'],
-                    datasets: [{
-                        data: [680, 420, 147],
-                        backgroundColor: ['rgba(148,163,184,0.5)', 'rgba(99,102,241,0.8)', 'rgba(52,211,153,0.8)'],
-                        borderColor: '#0f172a', borderWidth: 2
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    plugins: { legend: { position: 'bottom', labels: { color: '#94a3b8' } } }
-                }
-            });
-        }
-
-        function initInstallerQuoteChart() {
-            const ctx = document.getElementById('installerQuoteChart');
-            if (!ctx || installerQuoteChart) return;
-            installerQuoteChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['GreenTech', 'SolarMax', 'NY Solar', 'Coastal', 'SunPower', 'EcoVolt'],
-                    datasets: [{
-                        label: 'Quotes Requested',
-                        data: [145, 132, 128, 98, 87, 65],
-                        backgroundColor: 'rgba(34,211,238,0.6)',
-                        borderColor: 'rgba(34,211,238,0.8)',
-                        borderWidth: 1, borderRadius: 6
-                    }]
-                },
-                options: {
-                    responsive: true, maintainAspectRatio: false,
-                    indexAxis: 'y',
-                    plugins: { legend: { labels: { color: '#94a3b8' } } },
-                    scales: {
-                        x: { ticks: { color: '#94a3b8' }, grid: { color: 'rgba(148,163,184,0.1)' } },
-                        y: { ticks: { color: '#94a3b8' }, grid: { display: false } }
-                    }
-                }
-            });
-        }
-</script>
-<!-- Admin Panel -->
-    <div id="view-admin" class="view">
-        <div class="admin-panel">
-            <!-- Admin Sidebar -->
-            <div class="admin-sidebar">
-                <div class="admin-brand">
-                    <div class="logo"><i class="fas fa-shield-alt"></i></div>
-                    <span>Admin</span>
-                </div>
-                <div class="admin-nav">
-                    <a href="#" class="active" onclick="showAdminTab('overview')">
-                        <i class="fas fa-chart-line"></i> Overview
-                    </a>
-                    <a href="#" onclick="showAdminTab('users')">
-                        <i class="fas fa-users"></i> Users
-                        <span class="admin-badge" id="adminUserCount">0</span>
-                    </a>
-                    <a href="#" onclick="showAdminTab('installers')">
-                        <i class="fas fa-hard-hat"></i> Installers
-                        <span class="admin-badge" id="adminInstallerCount">0</span>
-                    </a>
-                    <a href="#" onclick="showAdminTab('reports')">
-                        <i class="fas fa-file-alt"></i> Reports
-                        <span class="admin-badge" id="adminReportCount">0</span>
-                    </a>
-                    <a href="#" onclick="showAdminTab('analytics')">
-                        <i class="fas fa-chart-pie"></i> Analytics
-                    </a>
-                    <a href="#" onclick="showAdminTab('settings')">
-                        <i class="fas fa-cog"></i> Settings
-                    </a>
-                </div>
-                <div class="admin-footer">
-                    <button class="btn btn-ghost btn-sm" onclick="showView('landing')">
-                        <i class="fas fa-arrow-left"></i> Back to Site
-                    </button>
-                </div>
-            </div>
-
-            <!-- Admin Content -->
-            <div class="admin-content">
-                <!-- Overview Tab -->
-                <div id="admin-tab-overview" class="admin-tab active">
-                    <div class="admin-header">
-                        <h1>Dashboard Overview</h1>
-                        <p>Real-time platform metrics and activity</p>
-                    </div>
-                    <div class="admin-stats-grid">
-                        <div class="admin-stat-card primary">
-                            <div class="admin-stat-icon"><i class="fas fa-users"></i></div>
-                            <div class="admin-stat-info">
-                                <div class="admin-stat-val" id="overviewTotalUsers">1,247</div>
-                                <div class="admin-stat-lbl">Total Users</div>
-                                <div class="admin-stat-trend up"><i class="fas fa-arrow-up"></i> 12% this month</div>
-                            </div>
-                        </div>
-                        <div class="admin-stat-card success">
-                            <div class="admin-stat-icon"><i class="fas fa-hard-hat"></i></div>
-                            <div class="admin-stat-info">
-                                <div class="admin-stat-val" id="overviewTotalInstallers">847</div>
-                                <div class="admin-stat-lbl">Verified Installers</div>
-                                <div class="admin-stat-trend up"><i class="fas fa-arrow-up"></i> 8% this month</div>
-                            </div>
-                        </div>
-                        <div class="admin-stat-card warning">
-                            <div class="admin-stat-icon"><i class="fas fa-calculator"></i></div>
-                            <div class="admin-stat-info">
-                                <div class="admin-stat-val" id="overviewTotalCalcs">45,230</div>
-                                <div class="admin-stat-lbl">Calculations</div>
-                                <div class="admin-stat-trend up"><i class="fas fa-arrow-up"></i> 24% this month</div>
-                            </div>
-                        </div>
-                        <div class="admin-stat-card purple">
-                            <div class="admin-stat-icon"><i class="fas fa-dollar-sign"></i></div>
-                            <div class="admin-stat-info">
-                                <div class="admin-stat-val" id="overviewRevenue">$18,420</div>
-                                <div class="admin-stat-lbl">Monthly Revenue</div>
-                                <div class="admin-stat-trend up"><i class="fas fa-arrow-up"></i> 15% this month</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="admin-charts-row">
-                        <div class="admin-chart-panel">
-                            <div class="panel-head"><h3>User Growth</h3></div>
-                            <div class="panel-body"><canvas id="userGrowthChart"></canvas></div>
-                        </div>
-                        <div class="admin-chart-panel">
-                            <div class="panel-head"><h3>Revenue Breakdown</h3></div>
-                            <div class="panel-body"><canvas id="revenueChart"></canvas></div>
-                        </div>
-                    </div>
-                    <div class="admin-recent-activity">
-                        <div class="panel">
-                            <div class="panel-head">
-                                <h3><i class="fas fa-history" style="color:var(--primary-bright); margin-right:10px;"></i>Recent Activity</h3>
-                            </div>
-                            <div class="panel-body" id="adminActivityList">
-                                <div class="act-item">
-                                    <div class="act-ico"><i class="fas fa-user-plus"></i></div>
-                                    <div class="act-info"><h4>New user registered</h4><p>sarah.johnson@gmail.com — Premium plan</p></div>
-                                    <span class="act-time">2m ago</span>
-                                </div>
-                                <div class="act-item">
-                                    <div class="act-ico"><i class="fas fa-file-export"></i></div>
-                                    <div class="act-info"><h4>Report generated</h4><p>Home Solar System 5kW — Project #1247</p></div>
-                                    <span class="act-time">5m ago</span>
-                                </div>
-                                <div class="act-item">
-                                    <div class="act-ico"><i class="fas fa-check-circle"></i></div>
-                                    <div class="act-info"><h4>Installer verified</h4><p>SunPower Pro — Austin, TX</p></div>
-                                    <span class="act-time">12m ago</span>
-                                </div>
-                                <div class="act-item">
-                                    <div class="act-ico"><i class="fas fa-crown"></i></div>
-                                    <div class="act-info"><h4>Plan upgrade</h4><p>john.doe@gmail.com — Free → Premium</p></div>
-                                    <span class="act-time">18m ago</span>
-                                </div>
-                                <div class="act-item">
-                                    <div class="act-ico"><i class="fas fa-calculator"></i></div>
-                                    <div class="act-info"><h4>Calculation completed</h4><p>Off-grid cabin system — 98.5% accuracy</p></div>
-                                    <span class="act-time">22m ago</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Users Tab -->
-                <div id="admin-tab-users" class="admin-tab">
-                    <div class="admin-header">
-                        <h1>User Management</h1>
-                        <p>View, manage, and moderate platform users</p>
-                    </div>
-                    <div class="admin-toolbar">
-                        <div class="admin-search">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="userSearch" placeholder="Search users by name or email..." onkeyup="filterAdminUsers()">
-                        </div>
-                        <div class="admin-filters">
-                            <select id="userPlanFilter" onchange="filterAdminUsers()">
-                                <option value="all">All Plans</option>
-                                <option value="free">Free</option>
-                                <option value="premium">Premium</option>
-                                <option value="installer">Installer</option>
-                            </select>
-                            <select id="userStatusFilter" onchange="filterAdminUsers()">
-                                <option value="all">All Status</option>
-                                <option value="active">Active</option>
-                                <option value="suspended">Suspended</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="admin-table-wrap">
-                        <table class="admin-table" id="usersTable">
-                            <thead>
-                                <tr>
-                                    <th>User</th>
-                                    <th>Email</th>
-                                    <th>Plan</th>
-                                    <th>Projects</th>
-                                    <th>Joined</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="usersTableBody"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Installers Tab -->
-                <div id="admin-tab-installers" class="admin-tab">
-                    <div class="admin-header">
-                        <h1>Installer Management</h1>
-                        <p>Verify, manage, and moderate installer profiles</p>
-                    </div>
-                    <div class="admin-toolbar">
-                        <div class="admin-search">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="installerSearchAdmin" placeholder="Search installers..." onkeyup="filterAdminInstallers()">
-                        </div>
-                        <div class="admin-filters">
-                            <select id="installerStatusFilter" onchange="filterAdminInstallers()">
-                                <option value="all">All Status</option>
-                                <option value="verified">Verified</option>
-                                <option value="pending">Pending</option>
-                                <option value="rejected">Rejected</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="admin-table-wrap">
-                        <table class="admin-table" id="installersTable">
-                            <thead>
-                                <tr>
-                                    <th>Installer</th>
-                                    <th>Company</th>
-                                    <th>Location</th>
-                                    <th>Rating</th>
-                                    <th>Status</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="installersTableBody"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Reports Tab -->
-                <div id="admin-tab-reports" class="admin-tab">
-                    <div class="admin-header">
-                        <h1>Generated Reports</h1>
-                        <p>Monitor and manage system-generated reports</p>
-                    </div>
-                    <div class="admin-toolbar">
-                        <div class="admin-search">
-                            <i class="fas fa-search"></i>
-                            <input type="text" id="reportSearch" placeholder="Search reports..." onkeyup="filterAdminReports()">
-                        </div>
-                        <div class="admin-filters">
-                            <select id="reportTypeFilter" onchange="filterAdminReports()">
-                                <option value="all">All Types</option>
-                                <option value="system">System Design</option>
-                                <option value="financial">Financial Analysis</option>
-                                <option value="bom">Bill of Materials</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="admin-table-wrap">
-                        <table class="admin-table" id="reportsTable">
-                            <thead>
-                                <tr>
-                                    <th>Report</th>
-                                    <th>User</th>
-                                    <th>Type</th>
-                                    <th>Generated</th>
-                                    <th>Size</th>
-                                    <th>Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody id="reportsTableBody"></tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- Analytics Tab -->
-                <div id="admin-tab-analytics" class="admin-tab">
-                    <div class="admin-header">
-                        <h1>Platform Analytics</h1>
-                        <p>Deep-dive metrics and performance indicators</p>
-                    </div>
-                    <div class="admin-stats-grid">
-                        <div class="admin-stat-card primary">
-                            <div class="admin-stat-icon"><i class="fas fa-user-plus"></i></div>
-                            <div class="admin-stat-info">
-                                <div class="admin-stat-val">+142</div>
-                                <div class="admin-stat-lbl">New Users (7d)</div>
-                            </div>
-                        </div>
-                        <div class="admin-stat-card success">
-                            <div class="admin-stat-icon"><i class="fas fa-calculator"></i></div>
-                            <div class="admin-stat-info">
-                                <div class="admin-stat-val">3,847</div>
-                                <div class="admin-stat-lbl">Calculations (7d)</div>
-                            </div>
-                        </div>
-                        <div class="admin-stat-card warning">
-                            <div class="admin-stat-icon"><i class="fas fa-file-alt"></i></div>
-                            <div class="admin-stat-info">
-                                <div class="admin-stat-val">892</div>
-                                <div class="admin-stat-lbl">Reports Generated (7d)</div>
-                            </div>
-                        </div>
-                        <div class="admin-stat-card purple">
-                            <div class="admin-stat-icon"><i class="fas fa-handshake"></i></div>
-                            <div class="admin-stat-info">
-                                <div class="admin-stat-val">234</div>
-                                <div class="admin-stat-lbl">Quote Requests (7d)</div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="admin-charts-row">
-                        <div class="admin-chart-panel wide">
-                            <div class="panel-head"><h3>Revenue Trends (6 Months)</h3></div>
-                            <div class="panel-body"><canvas id="revenueTrendChart"></canvas></div>
-                        </div>
-                    </div>
-                    <div class="admin-charts-row">
-                        <div class="admin-chart-panel">
-                            <div class="panel-head"><h3>Plan Distribution</h3></div>
-                            <div class="panel-body"><canvas id="planDistChart"></canvas></div>
-                        </div>
-                        <div class="admin-chart-panel">
-                            <div class="panel-head"><h3>Top Installers by Quotes</h3></div>
-                            <div class="panel-body"><canvas id="installerQuoteChart"></canvas></div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Settings Tab -->
-                <div id="admin-tab-settings" class="admin-tab">
-                    <div class="admin-header">
-                        <h1>Platform Settings</h1>
-                        <p>Configure global platform parameters</p>
-                    </div>
-                    <div class="admin-settings-grid">
-                        <div class="admin-setting-card">
-                            <h4><i class="fas fa-sliders-h"></i> Calculation Defaults</h4>
-                            <div class="setting-field">
-                                <label>Default Peak Sun Hours</label>
-                                <input type="number" value="5.5" step="0.1">
-                            </div>
-                            <div class="setting-field">
-                                <label>Default System Loss (%)</label>
-                                <input type="number" value="15" min="0" max="50">
-                            </div>
-                            <div class="setting-field">
-                                <label>Default Inverter Efficiency (%)</label>
-                                <input type="number" value="95" min="80" max="99">
-                            </div>
-                            <button class="btn btn-primary btn-sm" style="margin-top:12px;"><i class="fas fa-save"></i> Save Defaults</button>
-                        </div>
-                        <div class="admin-setting-card">
-                            <h4><i class="fas fa-dollar-sign"></i> Pricing Settings</h4>
-                            <div class="setting-field">
-                                <label>Premium Plan Price ($/mo)</label>
-                                <input type="number" value="29" min="1">
-                            </div>
-                            <div class="setting-field">
-                                <label>Installer Plan Price ($/mo)</label>
-                                <input type="number" value="99" min="1">
-                            </div>
-                            <div class="setting-field">
-                                <label>Free Plan Project Limit</label>
-                                <input type="number" value="3" min="1">
-                            </div>
-                            <button class="btn btn-primary btn-sm" style="margin-top:12px;"><i class="fas fa-save"></i> Save Pricing</button>
-                        </div>
-                        <div class="admin-setting-card">
-                            <h4><i class="fas fa-shield-alt"></i> Platform Security</h4>
-                            <div class="setting-field">
-                                <label>Max Login Attempts</label>
-                                <input type="number" value="5" min="1" max="10">
-                            </div>
-                            <div class="setting-field">
-                                <label>Session Timeout (hours)</label>
-                                <input type="number" value="24" min="1" max="168">
-                            </div>
-                            <div class="setting-field">
-                                <label>Require Email Verification</label>
-                                <select><option>Yes</option><option>No</option></select>
-                            </div>
-                            <button class="btn btn-primary btn-sm" style="margin-top:12px;"><i class="fas fa-save"></i> Save Security</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
+        initTheme();
+    </script>
 </body>
 </html>
